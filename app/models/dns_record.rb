@@ -7,6 +7,7 @@ class DnsRecord < ApplicationRecord
     s = page(params[:page] || 1)
     s = s.per(params[:per_page] || 25)
     s = s.joins(:hostnames)
+    s = s.include(:hostnames)
     s = s.filtering_hosts(params[:with_hosts], params[:without_hosts])
     s = s.group('dns_records.id')
     s
