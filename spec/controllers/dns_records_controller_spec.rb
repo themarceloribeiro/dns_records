@@ -22,7 +22,6 @@ RSpec.describe DnsRecordsController, type: :controller do
         'id' => dns_record.id,
         'hostnames' => [
           {
-            'id' => @hostname_a.id,
             'hostname' => @hostname_a.hostname,
             'dns_records' => @hostname_a.dns_records.count
           }
@@ -32,44 +31,44 @@ RSpec.describe DnsRecordsController, type: :controller do
     end
 
     it 'should return dns records based on hosts filters' do
-      FactoryBot.create :dns_record,
-                        ip_address: '1.1.1.1',
-                        hostname_attributes: [
-                          { hostname: 'lorem.com' },
-                          { hostname: 'ipsum.com' },
-                          { hostname: 'dolor.com' },
-                          { hostname: 'amet.com' }
-                        ]
+      a = FactoryBot.create :dns_record,
+                            ip_address: '1.1.1.1',
+                            hostname_attributes: [
+                              { hostname: 'lorem.com' },
+                              { hostname: 'ipsum.com' },
+                              { hostname: 'dolor.com' },
+                              { hostname: 'amet.com' }
+                            ]
 
-      FactoryBot.create :dns_record,
-                        ip_address: '2.2.2.2',
-                        hostname_attributes: [
-                          { hostname: 'ipsum.com' }
-                        ]
+      b = FactoryBot.create :dns_record,
+                            ip_address: '2.2.2.2',
+                            hostname_attributes: [
+                              { hostname: 'ipsum.com' }
+                            ]
 
-      FactoryBot.create :dns_record,
-                        ip_address: '3.3.3.3',
-                        hostname_attributes: [
-                          { hostname: 'ipsum.com' },
-                          { hostname: 'dolor.com' },
-                          { hostname: 'amet.com' }
-                        ]
+      c = FactoryBot.create :dns_record,
+                            ip_address: '3.3.3.3',
+                            hostname_attributes: [
+                              { hostname: 'ipsum.com' },
+                              { hostname: 'dolor.com' },
+                              { hostname: 'amet.com' }
+                            ]
 
-      FactoryBot.create :dns_record,
-                        ip_address: '4.4.4.4',
-                        hostname_attributes: [
-                          { hostname: 'ipsum.com' },
-                          { hostname: 'dolor.com' },
-                          { hostname: 'sit.com' },
-                          { hostname: 'amet.com' }
-                        ]
+      d = FactoryBot.create :dns_record,
+                            ip_address: '4.4.4.4',
+                            hostname_attributes: [
+                              { hostname: 'ipsum.com' },
+                              { hostname: 'dolor.com' },
+                              { hostname: 'sit.com' },
+                              { hostname: 'amet.com' }
+                            ]
 
-      FactoryBot.create :dns_record,
-                        ip_address: '5.5.5.5',
-                        hostname_attributes: [
-                          { hostname: 'dolor.com' },
-                          { hostname: 'sit.com' }
-                        ]
+      e = FactoryBot.create :dns_record,
+                            ip_address: '5.5.5.5',
+                            hostname_attributes: [
+                              { hostname: 'dolor.com' },
+                              { hostname: 'sit.com' }
+                            ]
 
       get :index, params: {
         with_hosts: 'ipsum.com, dolor.com', without_hosts: 'sit.com'
@@ -79,22 +78,19 @@ RSpec.describe DnsRecordsController, type: :controller do
       expect(data).to eql(
         'dns_records' => [
           {
-            'id' => 1,
+            'id' => a.id,
             'ip_address' => '1.1.1.1',
             'hostnames' => [
-              { 'dns_records' => 1, 'hostname' => 'lorem.com', 'id' => 1 },
-              { 'dns_records' => 4, 'hostname' => 'ipsum.com', 'id' => 2 },
-              { 'dns_records' => 4, 'hostname' => 'dolor.com', 'id' => 3 },
-              { 'dns_records' => 3, 'hostname' => 'amet.com', 'id' => 4 }
+              { 'dns_records' => 4, 'hostname' => 'ipsum.com' },
+              { 'dns_records' => 4, 'hostname' => 'dolor.com' }
             ]
           },
           {
-            'id' => 3,
+            'id' => c.id,
             'ip_address' => '3.3.3.3',
             'hostnames' => [
-              { 'dns_records' => 4, 'hostname' => 'ipsum.com', 'id' => 2 },
-              { 'dns_records' => 4, 'hostname' => 'dolor.com', 'id' => 3 },
-              { 'dns_records' => 3, 'hostname' => 'amet.com', 'id' => 4 }
+              { 'dns_records' => 4, 'hostname' => 'ipsum.com' },
+              { 'dns_records' => 4, 'hostname' => 'dolor.com' }
             ]
           }
         ],

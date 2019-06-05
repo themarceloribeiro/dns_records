@@ -17,7 +17,13 @@ class DnsRecordsController < ApplicationController
   protected
 
   def presenters
-    @dns_records.map { |r| DnsRecordPresenter.new(model: r).to_h }
+    @dns_records.map do |r|
+      DnsRecordPresenter.new(
+        model: r,
+        with_hosts: params[:with_hosts],
+        without_hosts: params[:without_hosts]
+      ).to_h
+    end
   end
 
   def dns_record_params

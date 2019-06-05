@@ -2,17 +2,16 @@ A list of hostnames the results should include (optional parameter)
 A list of hostnames the results should exclude (optional parameter)
 
 The result must contain all DNS records that have all the hostnames it should include,
+
 but none of the hostnames it should exclude.
 
 The response body must have:
 
 The ID of the matching DNS record
 The IP address of the matching DNS record
-
 An array of hostnames associated with the matching DNS records, except for those hostnames excluded by the query, where each hostname record contains:
 
 The hostname
-
 The number of DNS records associated with the hostname
 
 Examples
