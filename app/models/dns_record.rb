@@ -7,7 +7,15 @@ class DnsRecord < ApplicationRecord
     s = page(params[:page] || 1)
     s = s.per(params[:per_page] || 25)
     s = s.joins(:hostnames)
+    s = s.without_hosts(params[:without_hosts]) if params[:without_hosts].present?
+    s = s.with_hosts(params[:with_hosts]) if params[:with_hosts].present?
     s
+  }
+
+  scope :with_hosts, lambda { |hostnames_csv|
+  }
+
+  scope :without_hosts, lambda { |hostnames_csv|
   }
 
   def hostname_attributes=(atts)
