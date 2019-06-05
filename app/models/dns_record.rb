@@ -13,9 +13,11 @@ class DnsRecord < ApplicationRecord
   }
 
   scope :with_hosts, lambda { |hostnames_csv|
+    where("hostnames.hostname in ?", hostnames_csv.split(',').map(&:strip))
   }
 
   scope :without_hosts, lambda { |hostnames_csv|
+    where("hostnames.hostname not in ?", hostnames_csv.split(',').map(&:strip))
   }
 
   def hostname_attributes=(atts)
