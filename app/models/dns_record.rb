@@ -7,17 +7,24 @@ class DnsRecord < ApplicationRecord
     s = page(params[:page] || 1)
     s = s.per(params[:per_page] || 25)
     s = s.joins(:hostnames)
-    s = s.without_hosts(params[:without_hosts]) if params[:without_hosts].present?
-    s = s.with_hosts(params[:with_hosts]) if params[:with_hosts].present?
+    s = s.filtering_hosts(params[:with_hosts], params[:without_hosts])
+    s = s.group('dns_records.id')
     s
   }
 
-  scope :with_hosts, lambda { |hostnames_csv|
-    where("hostnames.hostname in ?", hostnames_csv.split(',').map(&:strip))
-  }
-
-  scope :without_hosts, lambda { |hostnames_csv|
-    where("hostnames.hostname not in ?", hostnames_csv.split(',').map(&:strip))
+  scope :filtering_hosts, lambda { |with_hosts, without_hosts|
+    s = all
+    with_hosts.split(',').map do |h|
+      s = s.having(
+        "FIND_IN_SET('#{h.strip}', GROUP_CONCAT(hostnames.hostname))"
+      )
+    end
+    without_hosts.split(',').map do |h|
+      s = s.having(
+        "NOT FIND_IN_SET('#{h.strip}', GROUP_CONCAT(hostnames.hostname))"
+      )
+    end
+    s
   }
 
   def hostname_attributes=(atts)

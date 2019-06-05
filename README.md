@@ -18,26 +18,6 @@ The number of DNS records associated with the hostname
 Examples
 Assuming the following DNS records and hostnames are stored in the database:
 
-DNS Record 1
-IP: 1.1.1.1
-Hostnames: lorem.com, ipsum.com, dolor.com, amet.com
-
-DNS Record 2
-IP: 2.2.2.2
-Hostnames: ipsum.com
-
-DNS Record 3
-IP: 3.3.3.3
-Hostnames: ipsum.com, dolor.com, amet.com
-
-DNS Record 4
-IP: 4.4.4.4
-Hostnames: ipsum.com, dolor.com, sit.com, amet.com
-
-DNS Record 5
-IP: 5.5.5.5
-Hostnames: dolor.com, sit.com
-
 When API endpoint #2 receives the following query:
 List of hostnames to be included: ipsum.com, dolor.com
 List of hostnames to be excluded: sit.com
