@@ -1,34 +1,31 @@
-A list of hostnames the results should include (optional parameter)
-A list of hostnames the results should exclude (optional parameter)
+### 1. Setup
 
-The result must contain all DNS records that have all the hostnames it should include,
+```
+rake db:create; rake db:migrate; rake db:seed; rake db:test:prepare
+```
 
-but none of the hostnames it should exclude.
+### 2. Run specs
 
-The response body must have:
+```
+rspec spec
+```
 
-The ID of the matching DNS record
-The IP address of the matching DNS record
-An array of hostnames associated with the matching DNS records, except for those hostnames excluded by the query, where each hostname record contains:
+### 3. Launch server
 
-The hostname
-The number of DNS records associated with the hostname
+```
+rails s
+```
 
-Examples
-Assuming the following DNS records and hostnames are stored in the database:
+### 4. requests
 
-When API endpoint #2 receives the following query:
-List of hostnames to be included: ipsum.com, dolor.com
-List of hostnames to be excluded: sit.com
-Page: 1
+Make your http requests from rails console:
 
-Then the response should have:
-The total number of matching DNS records: 2
-An array of matching DNS records
-ID: 1, IP: 1.1.1.1
-ID: 3, IP: 3.3.3.3
+```
+rails c
+```
 
-An array of hostnames associated with the DNS records (lorem.com, ipsum.com, dolor.com, amet.com), excluding any hostnames specified in the query (hostnames to be included: ipsum.com, dolor.com; hostnames to be excluded: sit.com)
+Then
 
-Hostname: lorem.com, Number of matching DNS records: 1
-Hostname: amet.com, Number of matching DNS records: 2
+```
+data = JSON.parse(RestClient.get("http://localhost:3000/dns_records?page=1&with_hosts=ipsum.com,dolor.com&without_hosts=sit.com").body)
+```

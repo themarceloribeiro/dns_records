@@ -71,7 +71,7 @@ RSpec.describe DnsRecordsController, type: :controller do
                             ]
 
       get :index, params: {
-        with_hosts: 'ipsum.com, dolor.com', without_hosts: 'sit.com'
+        with_hosts: 'ipsum.com,dolor.com', without_hosts: 'sit.com'
       }
 
       data = JSON.parse(response.body)
