@@ -2,12 +2,12 @@ require 'rails_helper'
 
 RSpec.describe DnsRecordsController, type: :controller do
   context '#index' do
-
     it 'should return dns records based on pagination settings' do
       @hostname_a = FactoryBot.create :hostname, hostname: 'www.hotmail.com'
       @hostname_b = FactoryBot.create :hostname, hostname: 'mx.hotmail.com'
-      5.times do |i|
-        FactoryBot.create :dns_record, hostnames: [@hostname_a, @hostname_b]
+
+      5.times do
+        FactoryBot.create(:dns_record, hostnames: [@hostname_a])
       end
 
       get :index, params: {
@@ -15,9 +15,19 @@ RSpec.describe DnsRecordsController, type: :controller do
       }
 
       data = JSON.parse(response.body)
+      dns_record = DnsRecord.first
+
       expect(data['dns_records'].count).to eql(2)
       expect(data['dns_records'].first).to eql({
-
+        'id' => dns_record.id,
+        'hostnames' => [
+          {
+            'id' => @hostname_a.id,
+            'hostname' => @hostname_a.hostname,
+            'dns_records' => @hostname_a.dns_records.count
+          }
+        ],
+        'ip_address' => '1.1.1.1'
       })
     end
 

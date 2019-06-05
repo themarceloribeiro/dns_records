@@ -72,6 +72,7 @@ GEM
       public_suffix (>= 2.0.2, < 4.0)
     arbre (1.2.1)
       activesupport (>= 3.0.0)
+    awesome_print (1.8.0)
     babel-source (5.8.35)
     babel-transpiler (0.7.0)
       babel-source (>= 4.0, < 6)
@@ -94,6 +95,7 @@ GEM
       rake (< 13.0)
     concurrent-ruby (1.1.5)
     crass (1.0.4)
+    database_cleaner (1.7.0)
     devise (4.6.2)
       bcrypt (~> 3.0)
       orm_adapter (~> 0.1)
@@ -293,9 +295,11 @@ PLATFORMS
 
 DEPENDENCIES
   activeadmin
+  awesome_print
   bootsnap (>= 1.4.2)
   byebug
   capybara (>= 2.15)
+  database_cleaner
   devise
   factory_bot
   factory_bot_rails

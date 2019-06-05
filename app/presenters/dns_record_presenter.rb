@@ -3,7 +3,7 @@ class DnsRecordPresenter < BasePresenter
     {
       id: id,
       ip_address: ip_address,
-      hostnames: hostnames.map { |h| HostnamePresenter.new(model: h) }
+      hostnames: model.hostnames.map { |h| HostnamePresenter.new(model: h).to_h }
     }
   end
 end

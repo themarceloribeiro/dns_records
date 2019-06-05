@@ -6,12 +6,15 @@ class DnsRecord < ApplicationRecord
   scope :filter, lambda { |params|
     s = page(params[:page] || 1)
     s = s.per(params[:per_page] || 25)
+    s = s.joins(:hostnames)
     s
   }
 
   def hostname_attributes=(atts)
+    return unless atts.present?
+
     atts.map do |att|
-      self.hostnames << Hostname.find_or_initialize_by(att)
+      hostnames << Hostname.find_or_initialize_by(att)
     end
   end
 end

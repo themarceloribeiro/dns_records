@@ -27,6 +27,7 @@ gem 'jbuilder', '~> 2.5'
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
+gem 'awesome_print'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.2', require: false
@@ -49,6 +50,7 @@ group :test do
   gem 'rspec-rails'
   gem 'factory_bot'
   gem 'factory_bot_rails'
+  gem 'database_cleaner'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
